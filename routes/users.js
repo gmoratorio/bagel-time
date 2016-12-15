@@ -10,6 +10,7 @@ router.get('/:id', function(req, res) {
     User.getOne(id)
     .then((result)=>{
       if(result){
+        delete result.password;
         res.json(result);
       }
       else{
@@ -25,7 +26,6 @@ router.get('/:id', function(req, res) {
     res.status(500);
     res.send("Invalid ID");
   }
-  // res.send('respond with a resource');
 });
 
 
