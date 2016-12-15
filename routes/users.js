@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../db/user');
-
+const Bagel = require('../db/bagel');
 /* GET users listing. */
 router.get('/:id', function(req, res) {
   const id = req.params.id;
@@ -10,7 +10,7 @@ router.get('/:id', function(req, res) {
     User.getOne(id)
     .then((result)=>{
       if(result){
-        delete result.password;
+        delete result.password; //delete result.object deletes object!!!!!!!
         res.json(result);
       }
       else{
@@ -29,6 +29,34 @@ router.get('/:id', function(req, res) {
 });
 
 
+
+router.get('/:id/bagel', function(req, res) {
+  const id = req.params.id;
+
+  if(isInteger(id)){
+    Bagel.getBagelByUser(id)
+    .then((result)=>{
+      if(result){
+        res.json(result);
+      }
+      else{
+        res.status(404);
+        res.send("Bagels not found!");
+      }
+    })
+    .catch((err)=>{
+      res.send(err);
+    });
+  }
+  else{
+    res.status(500);
+    res.send("Invalid ID");
+  }
+});
+
+
+
+
 function isInteger(id){
   if(isNaN(id)){
     return false;
@@ -37,6 +65,7 @@ function isInteger(id){
     return true;
   }
 }
+
 
 
 module.exports = router;
