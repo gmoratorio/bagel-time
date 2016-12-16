@@ -13,15 +13,27 @@ module.exports = {
             .select()
     },
     updateUserById: function(id, body) {
-              return  knex('user')
-                    .update(body, '*')
-                    .where('id', id)
-                    .then(result => {
-                        return result;
-                    })
-                    .catch((err)=>{
-                        return err;
-                    });
+        return knex('user')
+            .update(body, '*')
+            .where('id', id)
+            .then(result => {
+                return result;
+            })
+            .catch((err) => {
+                return err;
+            });
+    },
+    makeUserInActive: function(id) {
+        return knex('user')
+        .update({is_active:false}, '*')
+         .where('id', id)
+
+        .then(result => {
+          return result;
+        })
+        .catch((err) => {
+            return err;
+        });
     }
 
 }

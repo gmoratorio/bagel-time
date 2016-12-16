@@ -116,6 +116,30 @@ router.put('/:id', function(req, res) {
     }
 });
 
+ router.delete('/:id', function (req, res){
+   const id = req.params.id;
+    if(isInteger(id)){
+      User.getSingleUserById(id)
+      .then((result) => {
+          if (result) {
+              User.makeUserInActive(id)
+              .then(updatedUser =>{
+                   res.json(updatedUser);
+              });
+          } else {
+              res.status(404);
+              res.send("User not found!");
+          }
+      })
+      .catch((err) => {
+          res.send(err);
+      });
+    }else{
+        res.status(500);
+        res.send("Invalid ID");
+    }
+ });
+
 
 function isInteger(id) {
     if (isNaN(id)) {
