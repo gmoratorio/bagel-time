@@ -17,7 +17,7 @@ module.exports = {
             .update(body, '*')
             .where('id', id)
             .then(result => {
-                return result;
+                return result[0];
             })
             .catch((err) => {
                 return err;
