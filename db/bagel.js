@@ -1,6 +1,11 @@
 const knex = require("./connections");
 
 module.exports = {
+  getAllBagels: function(id){
+    return knex('bagel')
+             .select()
+
+  },
   getBagelByUser: function(id){
     return knex('bagel')
              .select()
